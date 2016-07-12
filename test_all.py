@@ -18,7 +18,7 @@ def rdColorImage(grey_img_array):
 
 
 #weights = 'fcn32s-heavy-pascal.caffemodel'
-weights = '/home/jacques/phdwork/caffe_tried_examples/fcn_cs/cs_8s_test_on_hds/fcn8s_train_iter_56000.caffemodel'
+weights = './fcn8s_56k.caffemodel'
 model = 'deploy.prototxt'
 
 caffe.set_mode_gpu()
@@ -53,7 +53,7 @@ def testoneimage(filename, i):
     if os.path.isdir('./results/' + relativepath[-2]) == False:
         os.mkdir('./results/' + relativepath[-2])
     if os.path.isdir('./results_color/' + relativepath[-2]) == False:
-        ok.mkdir('./results_color/' + relativepath[-2])
+        os.mkdir('./results_color/' + relativepath[-2])
 
     img = Image.fromarray(out, 'L')
     img.save('./results/' + relativepath[-2] + '/' + relativepath[-1])
@@ -71,7 +71,7 @@ def gttocolor(filename, i):
 
 #filenamelist = open('fcn_cs_train_laptop.txt').read().splitlines()
 #gtlist = open('fcn_cs_train_label_laptop.txt').read().splitlines()
-filenamelist = open('./cs_left8bit.txt').read().splitlines()
+filenamelist = open('./cs_left8bit_sequence.txt').read().splitlines()
 for i in range(len(filenamelist)):
 #for i in range(50):
     #if i%2 == 0:
@@ -82,4 +82,4 @@ for i in range(len(filenamelist)):
         #testoneimage(filenamelist[i], i)
         #gttocolor(gtlist[i],i)
     testoneimage(filenamelist[i], i)
-
+    print filenamelist[i]
