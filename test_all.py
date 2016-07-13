@@ -3,6 +3,7 @@ import numpy as np
 from PIL import Image
 import random as rd
 import os
+import sys
 
 def rdColorImage(grey_img_array):
     rd.seed(555) # each time it generates the same color distribution
@@ -72,7 +73,7 @@ def gttocolor(filename, i):
 #filenamelist = open('fcn_cs_train_laptop.txt').read().splitlines()
 #gtlist = open('fcn_cs_train_label_laptop.txt').read().splitlines()
 filenamelist = open('./cs_left8bit_sequence.txt').read().splitlines()
-for i in range(len(filenamelist)):
+for i in range(int(sys.argv[1]), int(sys.argv[2]), 1):
 #for i in range(50):
     #if i%2 == 0:
     #    testoneimage(filenamelist[i], i)
