@@ -4,6 +4,7 @@ from PIL import Image
 import random as rd
 import os
 import sys
+import datetime
 
 def rdColorImage(grey_img_array):
     rd.seed(555) # each time it generates the same color distribution
@@ -28,6 +29,7 @@ net = caffe.Net(model, weights, caffe.TEST)
 
 
 def testoneimage(filename, i):
+    print str(datetime.datetime.now()) + ' reading image... ' 
     im = Image.open(filename)
     #im = im.resize(im.size/np.array(2, np.int))
     in_ = np.array(im, dtype=np.float32)
@@ -41,6 +43,7 @@ def testoneimage(filename, i):
     net.blobs['data'].reshape(1, *in_.shape)
     net.blobs['data'].data[...] = in_
     
+    print str(datetime.datetime.now()) + ' preparing net forwarding... '
     net.forward()
     out = net.blobs['score'].data[0].argmax(axis=0)
     
@@ -56,6 +59,7 @@ def testoneimage(filename, i):
     if os.path.isdir('./results_color/' + relativepath[-2]) == False:
         os.mkdir('./results_color/' + relativepath[-2])
 
+    print str(datetime.datetime.now()) + ' saving images... '
     img = Image.fromarray(out, 'L')
     img.save('./results/' + relativepath[-2] + '/' + relativepath[-1])
     
@@ -83,4 +87,5 @@ for i in range(int(sys.argv[1]), int(sys.argv[2]), 1):
         #testoneimage(filenamelist[i], i)
         #gttocolor(gtlist[i],i)
     testoneimage(filenamelist[i], i)
+    print str(datetime.datetime.now()) + ' Done.'
     print filenamelist[i]
